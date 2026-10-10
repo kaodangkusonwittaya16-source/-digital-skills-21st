@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ทักษะดิจิทัลและทักษะศตวรรษที่ 21 | อาจารย์ยุ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#D98327;
+  --pop:#60A5FA;
+  --bg:#FFFFFF;
+  --soft:#ECE8AF;
+  --ink:#2B1A06;
+  --muted:#7A6A55;
+  --o-dark:#9A5410;
+  --o-light:#FCEBD3;
+  --b-dark:#1F5FA8;
+  --b-light:#E3EFFD;
+  --b-ink:#0A2540;
+  --grad:linear-gradient(95deg,#D98327 0%,#3B8BEB 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Itim','Sarabun','Noto Sans Thai','Tahoma',sans-serif;
+  background:var(--soft);
+  color:var(--ink);
+  min-height:100vh;min-height:100dvh;
+  display:grid;place-items:center;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+.stage{
+  width:min(96vw,calc(96vh*16/9));
+  width:min(96vw,calc(96dvh*16/9));
+  aspect-ratio:16/9;
+  container-type:inline-size;
+  position:relative;
+}
+.slide{
+  position:absolute;inset:0;
+  background:var(--bg);
+  border-radius:2.4cqw;
+  box-shadow:0 .5cqw 2.2cqw rgba(90,60,10,.13),0 .1cqw .3cqw rgba(90,60,10,.08);
+  overflow:hidden;
+}
+/* decorative corner blob */
+.slide::before{
+  content:"";position:absolute;right:-9cqw;top:-9cqw;width:26cqw;height:26cqw;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#F6F2C9 0%,var(--soft) 70%);
+  opacity:.9;pointer-events:none;
+}
+.page{
+  position:absolute;inset:0;
+  padding:4cqw 4.8cqw 6.2cqw;
+  display:none;flex-direction:column;
+}
+.page.active{display:flex}
+
+/* ---------- header ---------- */
+.head{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1}
+.tag{
+  display:inline-flex;align-items:center;gap:.7cqw;
+  background:var(--o-light);color:#7E440A;
+  font-size:1.45cqw;line-height:1;
+  padding:.7cqw 1.5cqw .7cqw 1.1cqw;border-radius:99cqw;
+}
+.tag i{width:.9cqw;height:.9cqw;border-radius:50%;background:var(--primary);display:block}
+.b .tag{background:var(--b-light);color:#17487F}
+.b .tag i{background:var(--pop)}
+h2{
+  font-size:4.3cqw;line-height:1.25;font-weight:700;
+  margin-top:1.4cqw;max-width:76cqw;letter-spacing:-.01cqw;
+}
+h2 .g,.title .g{
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+}
+.hico{
+  width:7.4cqw;height:7.4cqw;border-radius:50%;
+  background:var(--grad);display:grid;place-items:center;color:#fff;
+  box-shadow:0 .5cqw 1.2cqw rgba(217,131,39,.28);
+  transition:transform .3s cubic-bezier(.3,1.5,.5,1);
+  flex:none;margin-top:.3cqw;
+}
+.hico .ic{width:3.7cqw;height:3.7cqw}
+.hico:hover{transform:scale(1.1) rotate(-4deg)}
+
+/* ---------- icons ---------- */
+.ic{display:block;width:100%;height:100%}
+.ico{
+  width:5.6cqw;height:5.6cqw;border-radius:50%;flex:none;
+  display:grid;place-items:center;color:#fff;
+  background:var(--ic,var(--primary));
+  box-shadow:0 .3cqw .8cqw rgba(0,0,0,.18);
+  transition:transform .3s cubic-bezier(.3,1.5,.5,1);
+}
+.ico .ic{width:2.9cqw;height:2.9cqw}
+.ico:hover{transform:scale(1.14)}
+
+/* ---------- cards ---------- */
+.cards{flex:1;min-height:0;margin-top:2.6cqw;display:grid;gap:1.8cqw;position:relative;z-index:1}
+.cols3{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr}
+.rows{grid-template-columns:1fr;grid-template-rows:repeat(3,1fr)}
+.feature{grid-template-columns:1.15fr 1fr;grid-template-rows:1fr 1fr}
+.feature .card:first-child{grid-row:span 2}
+.steps{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr;align-items:end}
+.steps .card{height:var(--h,100%)}
+
+.card{
+  border-radius:1.8cqw;padding:2.1cqw 2.2cqw;
+  display:flex;flex-direction:column;gap:1cqw;
+  position:relative;overflow:hidden;
+}
+.card h3{font-size:2.35cqw;line-height:1.25;font-weight:700}
+.card p{font-size:1.75cqw;line-height:1.55;opacity:.94}
+.card small{font-size:1.4cqw;opacity:.85;line-height:1}
+.card.h{flex-direction:row;align-items:center;gap:2.2cqw}
+.card.h .tx{display:flex;flex-direction:column;gap:.5cqw}
+.card.big{justify-content:center;gap:1.6cqw}
+.card.big .ico{width:7.4cqw;height:7.4cqw}
+.card.big .ico .ic{width:3.9cqw;height:3.9cqw}
+.card.big h3{font-size:3cqw}
+.card.big p{font-size:2.05cqw}
+
+/* orange theme: dark to light */
+.card.t1{background:var(--o-dark);color:#fff;--ic:linear-gradient(135deg,#60A5FA,#2B7FE0)}
+.card.t2{background:var(--primary);color:var(--ink);--ic:var(--o-dark)}
+.card.t3{background:var(--o-light);color:var(--ink);--ic:var(--primary)}
+/* blue theme */
+.b .card.t1{background:var(--b-dark);color:#fff;--ic:var(--primary)}
+.b .card.t2{background:var(--pop);color:var(--b-ink);--ic:var(--b-dark)}
+.b .card.t3{background:var(--b-light);color:var(--b-ink);--ic:linear-gradient(135deg,#3B8BEB,#1F5FA8)}
+.b .hico{background:linear-gradient(135deg,#60A5FA,#1F5FA8);box-shadow:0 .5cqw 1.2cqw rgba(31,95,168,.28)}
+
+/* entrance: cards float up one by one */
+@keyframes rise{from{opacity:0;transform:translateY(3.2cqw)}to{opacity:1;transform:none}}
+.page.active .card{animation:rise .65s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*.2s + .15s)}
+
+/* ---------- footer ---------- */
+.foot{
+  position:absolute;left:4.8cqw;right:4.8cqw;bottom:1.7cqw;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:1.35cqw;color:var(--muted);z-index:2;
+}
+.pn{
+  font-size:1.5cqw;color:var(--o-dark);background:var(--o-light);
+  padding:.5cqw 1.4cqw;border-radius:99cqw;min-width:6.4cqw;text-align:center;
+}
+.nav{display:flex;gap:.8cqw;position:absolute;left:50%;transform:translateX(-50%);bottom:.2cqw}
+.nav button{
+  width:3.4cqw;height:3.4cqw;border-radius:50%;border:0;cursor:pointer;
+  background:var(--o-light);color:var(--o-dark);display:grid;place-items:center;
+  transition:transform .2s,background .2s;
+}
+.nav button:hover{background:var(--primary);color:#fff;transform:scale(1.1)}
+.nav button:focus-visible,.pn:focus-visible{outline:.3cqw solid var(--pop);outline-offset:.2cqw}
+.nav .ic{width:1.8cqw;height:1.8cqw}
+.bar{position:absolute;left:0;bottom:0;height:.55cqw;background:var(--grad);transition:width .45s ease;z-index:3}
+
+/* ---------- title slide ---------- */
+.cover{padding:4cqw 4.8cqw}
+.cover .left{width:57cqw;position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
+.title{font-size:4.45cqw;line-height:1.28;font-weight:700;margin-top:2cqw}
+.who{
+  margin-top:auto;margin-bottom:2.6cqw;
+  background:var(--o-light);border-radius:1.8cqw;padding:1.7cqw 2cqw;
+  display:flex;gap:1.8cqw;align-items:center;
+}
+.who .ico{width:5.8cqw;height:5.8cqw;--ic:linear-gradient(135deg,#D98327,#9A5410)}
+.who b{display:block;font-size:2.05cqw;font-weight:700;line-height:1.35}
+.who span{display:block;font-size:1.5cqw;line-height:1.5;color:#5A4630}
+.art{position:absolute;right:5cqw;top:9cqw;width:33cqw;height:33cqw}
+.art .disc{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,#F7F3CF,var(--soft));}
+.art .ring{position:absolute;inset:3.2cqw;border-radius:50%;border:.25cqw dashed rgba(217,131,39,.55)}
+.art .n{
+  position:absolute;border-radius:50%;display:grid;place-items:center;color:#fff;
+  box-shadow:0 .6cqw 1.4cqw rgba(60,40,10,.2);
+  transition:transform .3s cubic-bezier(.3,1.5,.5,1);
+}
+.art .n:hover{transform:scale(1.12)}
+.art .n.c{left:9.5cqw;top:9.5cqw;width:14cqw;height:14cqw;background:var(--grad)}
+.art .n.c .ic{width:7cqw;height:7cqw}
+.art .n.a{left:19cqw;top:-1.5cqw;width:8cqw;height:8cqw;background:linear-gradient(135deg,#60A5FA,#1F5FA8)}
+.art .n.b{left:-2cqw;top:19cqw;width:8cqw;height:8cqw;background:var(--o-dark)}
+.art .n.d{left:26cqw;top:21cqw;width:8cqw;height:8cqw;background:linear-gradient(135deg,#3B8BEB,#1F5FA8)}
+.art .n.e{left:3.5cqw;top:2.5cqw;width:6.4cqw;height:6.4cqw;background:var(--primary)}
+.art .n .ic{width:4cqw;height:4cqw}
+.art .n.e .ic{width:3.2cqw;height:3.2cqw}
+.cover .card-in{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.page.active .art .n{animation:rise .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*.15s + .1s)}
+.page.active .who{animation:rise .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:.5s}
+
+/* ---------- thanks strip ---------- */
+.thanks{
+  margin-top:1.8cqw;display:flex;align-items:center;gap:1.4cqw;
+  font-size:2cqw;color:var(--ink);position:relative;z-index:1;
+}
+.thanks .dot{width:3.6cqw;height:3.6cqw;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff}
+.thanks .dot .ic{width:2cqw;height:2cqw}
+.page.active .thanks{animation:rise .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:.9s}
+
+.hint{display:none}
+@media (max-aspect-ratio:1/1) and (max-width:700px){
+  .hint{display:block;position:fixed;top:10px;left:0;right:0;text-align:center;font-size:14px;color:#5A4630}
+}
+@media (prefers-reduced-motion:reduce){
+  .page.active .card,.page.active .art .n,.page.active .who,.page.active .thanks{animation:none}
+  .ico,.hico,.art .n,.nav button,.bar{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- icon library -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-laptop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+    <symbol id="i-smile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01"/><path d="M15 9h.01"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+  </defs>
+</svg>
+
+<div class="hint">หมุนจอเป็นแนวนอนจะอ่านสบายกว่านะ</div>
+
+<main class="stage" id="stage">
+<div class="slide" id="slide">
+
+  <!-- 1 : TITLE -->
+  <section class="page cover active" aria-label="หน้า 1">
+    <div class="left">
+      <div class="head"><span class="tag"><i></i>หมวดวิชาศึกษาทั่วไป</span></div>
+      <h1 class="title">นำเสนอทักษะความเข้าใจการใช้<span class="g">เทคโนโลยีดิจิทัล</span> และทักษะที่จำเป็นสำหรับการเรียนรู้ใน<span class="g">ศตวรรษที่ 21</span></h1>
+      <div class="who">
+        <div class="ico"><svg class="ic"><use href="#i-smile"/></svg></div>
+        <div>
+          <b>นำเสนอโดย นายมะยุ มะเย็ง (อาจารย์ยุ)</b>
+          <span>อาจารย์พิเศษ วิทยาลัยชุมชนจังหวัดสงขลา สังกัดหมวดวิชาศึกษาทั่วไป</span>
+          <span>สำหรับนักศึกษาชั้นปีที่ 1 สาขาการพัฒนาเด็กปฐมวัย</span>
+        </div>
+      </div>
+    </div>
+    <div class="art" aria-hidden="true">
+      <div class="disc"></div><div class="ring"></div>
+      <div class="n c" style="--i:0"><svg class="ic"><use href="#i-laptop"/></svg></div>
+      <div class="n a" style="--i:1"><svg class="ic"><use href="#i-bulb"/></svg></div>
+      <div class="n b" style="--i:2"><svg class="ic"><use href="#i-users"/></svg></div>
+      <div class="n d" style="--i:3"><svg class="ic"><use href="#i-shield"/></svg></div>
+      <div class="n e" style="--i:4"><svg class="ic"><use href="#i-heart"/></svg></div>
+    </div>
+    <div class="foot"><span></span><span class="pn">1 / 10</span></div>
+  </section>
+
+  <!-- 2 : AGENDA -->
+  <section class="page" aria-label="หน้า 2">
+    <div class="head">
+      <div><span class="tag"><i></i>แผนการเรียนรู้</span>
+        <h2>วันนี้เราจะ<span class="g">ไปด้วยกัน</span> ยังไงบ้าง</h2></div>
+      <div class="hico"><svg class="ic"><use href="#i-compass"/></svg></div>
+    </div>
+    <div class="cards rows">
+      <div class="card t1 h" style="--i:0"><div class="ico"><svg class="ic"><use href="#i-laptop"/></svg></div>
+        <div class="tx"><h3>1. ทำความรู้จักทักษะดิจิทัล</h3><p>เป็น “ใช้เป็น” ไม่ใช่แค่ “เล่นเป็น”</p></div></div>
+      <div class="card t2 h" style="--i:1"><div class="ico"><svg class="ic"><use href="#i-star"/></svg></div>
+        <div class="tx"><h3>2. ทักษะศตวรรษที่ 21 ที่ต้องมีติดตัว</h3><p>4C และทักษะอื่นที่ใช้ได้จริง</p></div></div>
+      <div class="card t3 h" style="--i:2"><div class="ico"><svg class="ic"><use href="#i-smile"/></svg></div>
+        <div class="tx"><h3>3. เอาไปใช้กับงานปฐมวัย</h3><p>ในบทบาทครูอนุบาลในอนาคตของพวกเรา</p></div></div>
+    </div>
+    <div class="foot"><span>อาจารย์ยุ | วิทยาลัยชุมชนจังหวัดสงขลา</span><span class="pn">2 / 10</span></div>
+  </section>
+
+  <!-- 3 : WHAT IS DIGITAL LITERACY -->
+  <section class="page b" aria-label="หน้า 3">
+    <div class="head">
+      <div><span class="tag"><i></i>ทักษะดิจิทัล</span>
+        <h2>ทักษะดิจิทัล ไม่ใช่แค่<span class="g">เล่นมือถือเป็น</span></h2></div>
+      <div class="hico"><svg class="ic"><use href="#i-globe"/></svg></div>
+    </div>
+    <div class="cards cols3">
+      <div class="card t1" style="--i:0"><div class="ico"><svg class="ic"><use href="#i-laptop"/></svg></div>
+        <h3>ใช้เครื่องมือเป็น</h3><p>เปิดแอป จัดไฟล์ ทำงานบนอุปกรณ์ได้คล่อง</p></div>
+      <div class="card t2" style="--i:1"><div class="ico"><svg class="ic"><use href="#i-search"/></svg></div>
+        <h3>คิดก่อนเชื่อ</h3><p>ตรวจข้อมูลและข่าวให้ดีก่อนกดแชร์</p></div>
+      <div class="card t3" style="--i:2"><div class="ico"><svg class="ic"><use href="#i-shield"/></svg></div>
+        <h3>ใช้อย่างปลอดภัย</h3><p>ดูแลข้อมูลส่วนตัว และเคารพสิทธิ์ของคนอื่น</p></div>
+    </div>
+    <div class="foot"><span>อาจารย์ยุ | วิทยาลัยชุมชนจังหวัดสงขลา</span><span class="pn">3 / 10</span></div>
+  </section>
+
+  <!-- 4 : LEVELS -->
+  <section class="page" aria-label="หน้า 4">
+    <div class="head">
+      <div><span class="tag"><i></i>ทักษะดิจิทัล</span>
+        <h2>จาก<span class="g">ผู้ใช้</span> ไปสู่<span class="g">ผู้สร้าง</span></h2></div>
+      <div class="hico"><svg class="ic"><use href="#i-zap"/></svg></div>
+    </div>
+    <div class="cards steps">
+      <div class="card t3" style="--i:0;--h:68%"><small>ระดับ 1</small><div class="ico"><svg class="ic"><use href="#i-phone"/></svg></div>
+        <h3>ใช้เป็น</h3><p>ทำใบงาน พิมพ์เอกสาร ส่งงานออนไลน์ได้</p></div>
+      <div class="card t2" style="--i:1;--h:84%"><small>ระดับ 2</small><div class="ico"><svg class="ic"><use href="#i-book"/></svg></div>
+        <h3>เข้าใจ</h3><p>รู้ว่าแอปเก็บข้อมูลอะไร และเลือกแอปที่เหมาะกับเด็ก</p></div>
+      <div class="card t1" style="--i:2;--h:100%"><small>ระดับ 3</small><div class="ico"><svg class="ic"><use href="#i-pencil"/></svg></div>
+        <h3>สร้างสรรค์</h3><p>ออกแบบสื่อและนิทานดิจิทัลของเราเองให้เด็กๆ</p></div>
+    </div>
+    <div class="foot"><span>อาจารย์ยุ | วิทยาลัยชุมชนจังหวัดสงขลา</span><span class="pn">4 / 10</span></div>
+  </section>
+
+  <!-- 5 : WHY 21ST CENTURY -->
+  <section class="page b" aria-label="หน้า 5">
+    <div class="head">
+      <div><span class="tag"><i></i>ทักษะศตวรรษที่ 21</span>
+        <h2>ทำไมต้องมี<span class="g">ทักษะศตวรรษที่ 21</span></h2></div>
+      <div class="hico"><svg class="ic"><use href="#i-clock"/></svg></div>
+    </div>
+    <div class="cards rows">
+      <div class="card t1 h" style="--i:0"><div class="ico"><svg class="ic"><use href="#i-refresh"/></svg></div>
+        <div class="tx"><h3>โลกเปลี่ยนเร็วมาก</h3><p>ความรู้ล้าสมัยไว เราจึงต้องเรียนรู้ได้ตลอดชีวิต</p></div></div>
+      <div class="card t2 h" style="--i:1"><div class="ico"><svg class="ic"><use href="#i-zap"/></svg></div>
+        <div class="tx"><h3>AI เข้ามาในห้องเรียนแล้ว</h3><p>เครื่องช่วยได้หลายอย่าง แต่ใจของความเป็นครูแทนกันไม่ได้</p></div></div>
+      <div class="card t3 h" style="--i:2"><div class="ico"><svg class="ic"><use href="#i-phone"/></svg></div>
+        <div class="tx"><h3>เด็กยุคนี้โตมากับหน้าจอ</h3><p>ครูต้องเข้าใจโลกของเด็ก ถึงจะพาเขาใช้เทคโนโลยีได้ดี</p></div></div>
+    </div>
+    <div class="foot"><span>อาจารย์ยุ | วิทยาลัยชุมชนจังหวัดสงขลา</span><span class="pn">5 / 10</span></div>
+  </section>
+
+  <!-- 6 : 4C -->
+  <section class="page" aria-label="หน้า 6">
+    <div class="head">
+      <div><span class="tag"><i></i>ทักษะศตวรรษที่ 21</span>
+        <h2>ทักษะ <span class="g">4C</span> ที่ใช้ได้ทุกวัน</h2></div>
+      <div class="hico"><svg class="ic"><use href="#i-target"/></svg></div>
+    </div>
+    <div class="cards cols3">
+      <div class="card t1" style="--i:0"><div class="ico"><svg class="ic"><use href="#i-bulb"/></svg></div>
+        <h3>คิดวิเคราะห์ แก้ปัญหา</h3><p>Critical Thinking: ถามว่า “จริงไหม” และ “ทำไง” ได้</p></div>
+      <div class="card t2" style="--i:1"><div class="ico"><svg class="ic"><use href="#i-pencil"/></svg></div>
+        <h3>สร้างสรรค์</h3><p>Creativity: คิดกิจกรรมใหม่ๆ ให้เด็กสนุกและได้เรียนรู้</p></div>
+      <div class="card t3" style="--i:2"><div class="ico"><svg class="ic"><use href="#i-chat"/></svg></div>
+        <h3>สื่อสาร และร่วมมือ</h3><p>Communication และ Collaboration: คุยให้เข้าใจ ทำงานเป็นทีม</p></div>
+    </div>
+    <div class="foot"><span>อาจารย์ยุ | วิทยาลัยชุมชนจังหวัดสงขลา</span><span class="pn">6 / 10</span></div>
+  </section>
+
+  <!-- 7 : INFO / MEDIA / ICT -->
+  <section class="page b" aria-label="หน้า 7">
+    <div class="head">
+      <div><span class="tag"><i></i>ทักษะที่เกี่ยวข้อง</span>
+        <h2>รู้เท่าทัน<span class="g">สารสนเทศ สื่อ และเทคโนโลยี</span></h2></div>
+      <div class="hico"><svg class="ic"><use href="#i-layers"/></svg></div>
+    </div>
+    <div class="cards feature">
+      <div class="card t1 big" style="--i:0"><div class="ico"><svg class="ic"><use href="#i-search"/></svg></div>
+        <h3>รู้เท่าทันสารสนเทศ</h3><p>ค้นหา คัดกรอง และเช็กแหล่งที่มา ก่อนนำไปใช้สอนหรือส่งต่อ</p></div>
+      <div class="card t2 h" style="--i:1"><div class="ico"><svg class="ic"><use href="#i-eye"/></svg></div>
+        <div class="tx"><h3>รู้เท่าทันสื่อ</h3><p>ใครทำ ทำไมถึงทำ และอยากให้เรารู้สึกยังไง</p></div></div>
+      <div class="card t3 h" style="--i:2"><div class="ico"><svg class="ic"><use href="#i-laptop"/></svg></div>
+        <div class="tx"><h3>รู้เท่าทันเทคโนโลยี</h3><p>เลือกเครื่องมือให้เหมาะกับงาน</p></div></div>
+    </div>
+    <div class="foot"><span>อาจารย์ยุ | วิทยาลัยชุมชนจังหวัดสงขลา</span><span class="pn">7 / 10</span></div>
+  </section>
+
+  <!-- 8 : LIFE & CAREER -->
+  <section class="page" aria-label="หน้า 8">
+    <div class="head">
+      <div><span class="tag"><i></i>ทักษะที่เกี่ยวข้อง</span>
+        <h2>ทักษะ<span class="g">ชีวิตและอาชีพ</span> ที่ครูเด็กเล็กขาดไม่ได้</h2></div>
+      <div class="hico"><svg class="ic"><use href="#i-check"/></svg></div>
+    </div>
+    <div class="cards cols3">
+      <div class="card t1" style="--i:0"><div class="ico"><svg class="ic"><use href="#i-refresh"/></svg></div>
+        <h3>ยืดหยุ่น ปรับตัวได้</h3><p>เด็กแต่ละคนไม่เหมือนกัน แผนการสอนก็ต้องปรับได้</p></div>
+      <div class="card t2" style="--i:1"><div class="ico"><svg class="ic"><use href="#i-zap"/></svg></div>
+        <h3>ริเริ่ม และกำกับตนเอง</h3><p>ลงมือเรียนรู้เอง ไม่ต้องรอให้ใครมาสั่ง</p></div>
+      <div class="card t3" style="--i:2"><div class="ico"><svg class="ic"><use href="#i-check"/></svg></div>
+        <h3>รับผิดชอบ มีจริยธรรม</h3><p>ใช้เทคโนโลยีอย่างถูกต้อง รวมถึงเรื่องรูปภาพของเด็ก</p></div>
+    </div>
+    <div class="foot"><span>อาจารย์ยุ | วิทยาลัยชุมชนจังหวัดสงขลา</span><span class="pn">8 / 10</span></div>
+  </section>
+
+  <!-- 9 : APPLY -->
+  <section class="page b" aria-label="หน้า 9">
+    <div class="head">
+      <div><span class="tag"><i></i>นำไปใช้จริง</span>
+        <h2>ถ้าเป็นครูปฐมวัย จะ<span class="g">ใช้เทคโนโลยี</span>ยังไงดี</h2></div>
+      <div class="hico"><svg class="ic"><use href="#i-book"/></svg></div>
+    </div>
+    <div class="cards rows">
+      <div class="card t1 h" style="--i:0"><div class="ico"><svg class="ic"><use href="#i-smile"/></svg></div>
+        <div class="tx"><h3>เลือกให้เหมาะกับวัย</h3><p>เนื้อหาเหมาะกับเด็ก คุมเวลาหน้าจอ และยังต้องมีเวลาเล่นจริง</p></div></div>
+      <div class="card t2 h" style="--i:1"><div class="ico"><svg class="ic"><use href="#i-heart"/></svg></div>
+        <div class="tx"><h3>เป็นตัวช่วย ไม่ใช่ตัวแทน</h3><p>เสริมกิจกรรมได้ แต่ไม่แทนการเล่นและการกอด การคุยกับครู</p></div></div>
+      <div class="card t3 h" style="--i:2"><div class="ico"><svg class="ic"><use href="#i-lock"/></svg></div>
+        <div class="tx"><h3>ปกป้องข้อมูลของเด็ก</h3><p>ขออนุญาตผู้ปกครองก่อนถ่ายภาพหรือโพสต์ทุกครั้ง</p></div></div>
+    </div>
+    <div class="foot"><span>อาจารย์ยุ | วิทยาลัยชุมชนจังหวัดสงขลา</span><span class="pn">9 / 10</span></div>
+  </section>
+
+  <!-- 10 : SUMMARY -->
+  <section class="page" aria-label="หน้า 10">
+    <div class="head">
+      <div><span class="tag"><i></i>สรุป</span>
+        <h2>กลับบ้านวันนี้ ขอให้<span class="g">จำได้ 3 ข้อ</span></h2></div>
+      <div class="hico"><svg class="ic"><use href="#i-flag"/></svg></div>
+    </div>
+    <div class="cards cols3" style="margin-bottom:0">
+      <div class="card t1" style="--i:0"><div class="ico"><svg class="ic"><use href="#i-check"/></svg></div>
+        <h3>ใช้เป็น และคิดเป็น</h3><p>ทักษะดิจิทัลคือการใช้อย่างมีวิจารณญาณและปลอดภัย</p></div>
+      <div class="card t2" style="--i:1"><div class="ico"><svg class="ic"><use href="#i-book"/></svg></div>
+        <h3>เรียนรู้ได้ตลอดชีวิต</h3><p>4C และการปรับตัวช่วยให้เรารับมือโลกที่เปลี่ยนเร็ว</p></div>
+      <div class="card t3" style="--i:2"><div class="ico"><svg class="ic"><use href="#i-heart"/></svg></div>
+        <h3>ครูคือแบบอย่าง</h3><p>เด็กเล็กเรียนรู้จากสิ่งที่เราทำ ไม่ใช่แค่สิ่งที่เราพูด</p></div>
+    </div>
+    <div class="thanks"><div class="dot"><svg class="ic"><use href="#i-smile"/></svg></div>ขอบคุณครับ มีคำถามหรืออยากแลกเปลี่ยน ชวนคุยกันได้เลย</div>
+    <div class="foot"><span>อาจารย์ยุ | วิทยาลัยชุมชนจังหวัดสงขลา</span><span class="pn">10 / 10</span></div>
+  </section>
+
+  <div class="nav" role="group" aria-label="เปลี่ยนหน้า">
+    <button id="prev" aria-label="หน้าก่อนหน้า"><svg class="ic"><use href="#i-left"/></svg></button>
+    <button id="next" aria-label="หน้าถัดไป"><svg class="ic"><use href="#i-right"/></svg></button>
+  </div>
+  <div class="bar" id="bar"></div>
+</div>
+</main>
+
+<script>
+(function(){
+  var pages=[].slice.call(document.querySelectorAll('.page'));
+  var bar=document.getElementById('bar');
+  var cur=0;
+  function show(n){
+    n=Math.max(0,Math.min(pages.length-1,n));
+    pages.forEach(function(p,i){p.classList.toggle('active',i===n)});
+    cur=n;
+    bar.style.width=((n+1)/pages.length*100)+'%';
+    try{history.replaceState(null,'','#'+(n+1))}catch(e){}
+  }
+  function next(){show(cur+1)}
+  function prev(){show(cur-1)}
+  document.getElementById('next').addEventListener('click',next);
+  document.getElementById('prev').addEventListener('click',prev);
+  document.addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Enter'){e.preventDefault();next()}
+    else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}
+    else if(k==='Home'){show(0)}
+    else if(k==='End'){show(pages.length-1)}
+    else if(k==='f'||k==='F'){
+      if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}
+      else{document.exitFullscreen&&document.exitFullscreen()}
+    }
+  });
+  var sx=null;
+  document.addEventListener('touchstart',function(e){sx=e.changedTouches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(sx===null)return;
+    var dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>50){dx<0?next():prev()}
+    sx=null;
+  },{passive:true});
+  var h=parseInt((location.hash||'').replace('#',''),10);
+  show(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>
